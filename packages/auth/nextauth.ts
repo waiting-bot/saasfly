@@ -1,4 +1,5 @@
-import { getServerSession, NextAuthOptions, User } from "next-auth";
+import type { NextAuthOptions, User } from "next-auth";
+import { getServerSession } from "next-auth";
 import { KyselyAdapter } from "@auth/kysely-adapter";
 import GitHubProvider from "next-auth/providers/github";
 import EmailProvider from "next-auth/providers/email";

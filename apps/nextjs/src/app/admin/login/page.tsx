@@ -53,15 +53,14 @@ export default function LoginPage() {
             />
           </CardItem>
           <div className="mt-20 flex items-center justify-between">
-            <CardItem
-              translateZ={20}
-              as={Link}
+            <a
               href="https://github.com/saasfly/saasfly"
-              target="__blank"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-xl px-4 py-2 text-xs font-normal dark:text-white"
             >
               You know this is not easy for us
-            </CardItem>
+            </a>
             <button
               type="button"
               className={cn(buttonVariants({ variant: "outline" }))}

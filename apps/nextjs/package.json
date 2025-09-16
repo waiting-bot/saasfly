@@ -18,6 +18,7 @@
     "@next/mdx": "14.2.5",
     "@saasfly/api": "workspace:*",
     "@saasfly/auth": "workspace:*",
+    "next-auth": "^4.24.7",
     "@saasfly/db": "workspace:*",
     "@saasfly/stripe": "workspace:*",
     "@t3-oss/env-nextjs": "0.8.0",

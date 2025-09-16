@@ -50,3 +50,10 @@ package-lock.json
 .idea/
 
 .env
+
+# nitro build files
+.nitro/
+*.mjs.map
+
+# nuxt/nitro
+.output/
