@@ -3,10 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "clean": "rm -rf .turbo node_modules",
+    "clean": "rm -rf .turbo node_modules .output",
     "lint": "eslint",
     "format": "prettier --write '**/*.{js,cjs,mjs,ts,tsx,md,json}'  --ignore-path .prettierignore",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build": "nitro build",
+    "dev": "nitro dev"
   },
   "dependencies": {
     "@auth/core": "0.31.0"
