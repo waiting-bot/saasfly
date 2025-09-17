@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "kysely": "0.27.3",
-    "@vercel/postgres-kysely": "0.8.0"
+    "@vercel/postgres-kysely": "0.8.0",
+    "pg": "8.11.3"
   },
   "devDependencies": {
     "@saasfly/eslint-config": "workspace:*",

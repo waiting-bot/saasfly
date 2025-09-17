@@ -1,17 +1,29 @@
-import { z } from "zod";
+import { createTRPCRouter, publicProcedure } from "../trpc";
+import { db } from "@saasfly/db";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+export const healthCheckRouter = createTRPCRouter({
+  health: publicProcedure
+    .query(async () => {
+      let dbStatus = "unknown";
+      let dbError = null;
+      
+      // 测试数据库连接
+      try {
+        await db.selectFrom("customer").select("id").limit(1).execute();
+        dbStatus = "connected";
+      } catch (error) {
+        dbStatus = "error";
+        dbError = error instanceof Error ? error.message : "Unknown error";
+      }
 
-export const helloRouter = createTRPCRouter({
-  hello: protectedProcedure
-    .input(
-      z.object({
-        text: z.string(),
-      }),
-    )
-    .query((opts: { input: { text: string } }) => {
       return {
-        greeting: `hello ${opts.input.text}`,
+        status: dbStatus === "connected" ? "ok" : "degraded",
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        database: {
+          status: dbStatus,
+          error: dbError,
+        },
       };
     }),
 });

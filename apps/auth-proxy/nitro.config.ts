@@ -18,4 +18,10 @@ export default defineNitroConfig({
     GITHUB_CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
     AUTH_REDIRECT_PROXY_URL: process.env.AUTH_REDIRECT_PROXY_URL,
   },
+  // 开发环境配置
+  devServer: {
+    port: 3001,
+  },
+  // 生产环境配置
+  port: 3001,
 });

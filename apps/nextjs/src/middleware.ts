@@ -11,6 +11,11 @@ function getLocale(request: Request): string | undefined {
 export function middleware(request: Request) {
   const pathname = new URL(request.url).pathname;
   
+  // 如果是API路径，直接返回，不进行locale处理
+  if (pathname.startsWith('/api/')) {
+    return NextResponse.next();
+  }
+  
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
