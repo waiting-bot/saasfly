@@ -38,7 +38,7 @@ const mockPrompts = {
 export const generateRouter = createTRPCRouter({
   generatePrompt: publicProcedure
     .input(generateInputSchema)
-    .query(async ({ input }) => {
+    .mutation(async ({ input }) => {
       const { model_type, image_url } = input
 
       // 创建Coze客户端
@@ -51,7 +51,7 @@ export const generateRouter = createTRPCRouter({
           model_type,
         })
 
-        if (cozeResult.success) {
+        if (cozeResult.success && cozeResult.data) {
           return {
             success: true,
             data: {

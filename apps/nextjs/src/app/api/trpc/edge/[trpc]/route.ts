@@ -7,11 +7,19 @@ import { auth } from "@saasfly/auth/next-auth.config"
 
 // export const runtime = "edge";
 const createContext = async (req: NextRequest) => {
-    const session = await auth()
-    return createTRPCContext({
-        headers: req.headers,
-        auth: session?.user,
-    });
+    try {
+        const session = await auth()
+        return createTRPCContext({
+            headers: req.headers,
+            auth: session?.user,
+        });
+    } catch (error) {
+        console.log("Auth error, using empty context:", error instanceof Error ? error.message : String(error))
+        return createTRPCContext({
+            headers: req.headers,
+            auth: null,
+        });
+    }
 };
 
 const handler = (req: NextRequest) =>

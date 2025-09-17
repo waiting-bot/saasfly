@@ -62,14 +62,16 @@ export default function AIPromptPage() {
       // 将base64图片转换为临时URL（实际项目中应该上传到云存储）
       const imageUrl = uploadedImage // 在实际项目中，这里应该是上传后的URL
 
-      const response = await fetch(`/api/trpc/generate.generatePrompt`, {
+      const response = await fetch(`/api/trpc/edge/generate.generatePrompt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          image_url: imageUrl,
-          model_type: selectedModel,
+          json: {
+            image_url: imageUrl,
+            model_type: selectedModel,
+          },
         }),
       })
 
