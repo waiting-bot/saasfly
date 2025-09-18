@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd apps/nextjs && bun run build",
-  "installCommand": "cd apps/nextjs && bun install",
+  "buildCommand": "bun run build --filter nextjs",
+  "installCommand": "bun install",
   "outputDirectory": "apps/nextjs/.next",
   "framework": "nextjs",
   "devCommand": "turbo run dev --parallel",
