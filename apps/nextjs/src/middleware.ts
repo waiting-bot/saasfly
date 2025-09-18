@@ -5,7 +5,16 @@ import Negotiator from "negotiator";
 import { i18n } from "./config/i18n-config";
 
 function getLocale(request: Request): string | undefined {
-  return i18n.defaultLocale;
+  const negotiatorHeaders: Record<string, string> = {};
+  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
+
+  const languages = new Negotiator({ headers: negotiatorHeaders }).languages();
+  
+  try {
+    return matchLocale(languages, i18n.locales, i18n.defaultLocale);
+  } catch {
+    return i18n.defaultLocale;
+  }
 }
 
 export function middleware(request: Request) {
