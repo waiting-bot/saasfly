@@ -1,10 +1,9 @@
 {
-  "buildCommand": "cd ../.. && bun run build --filter nextjs",
+  "buildCommand": "bun run build --filter nextjs",
   "installCommand": "bun install",
-  "outputDirectory": ".next",
+  "outputDirectory": "apps/nextjs/.next",
   "framework": "nextjs",
   "devCommand": "turbo run dev --parallel",
-  "rootDirectory": "apps/nextjs",
   "regions": ["hkg1"],
   "functions": {
     "app/**": {
