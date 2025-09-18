@@ -5,7 +5,8 @@ import { createCozeClient } from "../server/coze"
 
 // 定义输入数据的schema
 const generateInputSchema = z.object({
-  image_url: z.string().url("请提供有效的图片URL"),
+  image_base64: z.string().min(1, "请提供图片数据"),
+  image_name: z.string().min(1, "请提供图片名称"),
   model_type: z.enum(["midjourney", "stableDiffusion", "flux", "normal"], {
     errorMap: () => ({ message: "请选择有效的模型类型" }),
   }),
@@ -39,42 +40,79 @@ export const generateRouter = createTRPCRouter({
   generatePrompt: publicProcedure
     .input(generateInputSchema)
     .mutation(async ({ input }) => {
-      const { model_type, image_url } = input
+      const { model_type, image_base64, image_name } = input
+      
+      // 打印并确认zod输入schema
+      console.log('🔧 generatePrompt路由 - zod输入schema验证:', {
+        inputSchema: generateInputSchema.shape,
+        receivedInput: {
+          model_type,
+          image_base64: image_base64 ? `${image_base64.substring(0, 50)}...` : 'undefined',
+          image_name,
+          base64Length: image_base64?.length || 0
+        },
+        schemaValidation: {
+          model_typeValid: ['midjourney', 'stableDiffusion', 'flux', 'normal'].includes(model_type),
+          image_base64Valid: typeof image_base64 === 'string' && image_base64.length > 0,
+          image_nameValid: typeof image_name === 'string' && image_name.length > 0
+        }
+      })
 
       // 创建Coze客户端
+      console.log('🔧 Generate Router - 准备创建Coze客户端')
       const cozeClient = createCozeClient()
 
       try {
-        // 尝试使用真实的Coze API
-        const cozeResult = await cozeClient.generatePrompt({
-          image_url,
+        console.log('🔄 开始处理图片:', {
+          image_name,
           model_type,
+          base64Length: image_base64.length,
+          hasBase64Prefix: image_base64.includes(','),
         })
 
-        if (cozeResult.success && cozeResult.data) {
-          return {
-            success: true,
-            data: {
-              model: model_type,
-              prompt: cozeResult.data.prompt,
-              analysis: cozeResult.data.analysis || {
-                dominant_colors: ["blue", "white", "gray"],
-                style: model_type === "midjourney" ? "artistic" : "realistic",
-                complexity: Math.random() > 0.5 ? "high" : "medium",
-                subjects: ["landscape", "architecture", "abstract"].filter(() => Math.random() > 0.5),
-              },
-              metadata: {
-                processed_at: new Date().toISOString(),
-                image_url: image_url,
-                processing_time: cozeResult.data.processing_time || "2.0s",
-                confidence: cozeResult.data.confidence || 0.9,
-                api_source: "coze",
-              },
+        // 将base64转换为File对象
+        const base64Data = image_base64.split(',')[1] || image_base64
+        const imageBuffer = Buffer.from(base64Data, 'base64')
+        const imageFile = new File([imageBuffer], image_name, { type: 'image/jpeg' })
+        
+        console.log('📁 图片转换完成:', {
+          fileName: imageFile.name,
+          fileSize: imageFile.size,
+          fileType: imageFile.type,
+          bufferSize: imageBuffer.length,
+        })
+        
+        // 使用Coze API生成提示词（先上传文件，再调用工作流）
+        const prompt = await cozeClient.generatePrompt(imageFile, model_type)
+        
+        return {
+          success: true,
+          data: {
+            model: model_type,
+            prompt: prompt,
+            analysis: {
+              dominant_colors: ["blue", "white", "gray"],
+              style: model_type === "midjourney" ? "artistic" : "realistic",
+              complexity: Math.random() > 0.5 ? "high" : "medium",
+              subjects: ["landscape", "architecture", "abstract"].filter(() => Math.random() > 0.5),
             },
-          }
+            metadata: {
+              processed_at: new Date().toISOString(),
+              image_name: image_name,
+              processing_time: "2.0s",
+              confidence: 0.9,
+              api_source: "coze",
+            },
+          },
         }
       } catch (error) {
-        console.log("Coze API调用失败，使用备用数据:", error)
+        console.error("❌ Coze API调用失败，使用备用数据:", {
+          error: error instanceof Error ? error.message : error,
+          stack: error instanceof Error ? error.stack : undefined,
+          errorType: typeof error,
+          errorName: error instanceof Error ? error.name : 'Unknown',
+          timestamp: new Date().toISOString()
+        })
       }
 
       // 如果Coze API失败，使用mock数据作为备用
@@ -103,7 +141,7 @@ export const generateRouter = createTRPCRouter({
           analysis: imageAnalysis,
           metadata: {
             processed_at: new Date().toISOString(),
-            image_url: image_url,
+            image_name: image_name,
             processing_time: "1.5s",
             confidence: 0.85 + Math.random() * 0.1,
             api_source: "mock",
@@ -133,7 +171,7 @@ export const generateRouter = createTRPCRouter({
           return {
             model: request.model_type,
             prompt: randomPrompt,
-            image_url: request.image_url,
+            image_name: request.image_name,
             success: true,
           }
         })

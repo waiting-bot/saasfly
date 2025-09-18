@@ -26,9 +26,10 @@ interface GenerateResponse {
     }
     metadata: {
       processed_at: string
-      image_url: string
+      image_name: string
       processing_time: string
       confidence: number
+      api_source: string
     }
   }
 }
@@ -36,6 +37,7 @@ interface GenerateResponse {
 export default function AIPromptPage() {
   const [selectedModel, setSelectedModel] = useState<string>("")
   const [uploadedImage, setUploadedImage] = useState<string | null>(null)
+  const [uploadedFileName, setUploadedFileName] = useState<string>("")
   const [generatedPrompt, setGeneratedPrompt] = useState<string>("")
   const [generatedData, setGeneratedData] = useState<GenerateResponse["data"] | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -46,6 +48,7 @@ export default function AIPromptPage() {
       const reader = new FileReader()
       reader.onload = (e) => {
         setUploadedImage(e.target?.result as string)
+        setUploadedFileName(file.name)
       }
       reader.readAsDataURL(file)
     }
@@ -59,37 +62,92 @@ export default function AIPromptPage() {
 
     setIsLoading(true)
     try {
-      // 将base64图片转换为临时URL（实际项目中应该上传到云存储）
-      const imageUrl = uploadedImage // 在实际项目中，这里应该是上传后的URL
+      console.log('🚀 开始生成提示词:', {
+        selectedModel,
+        uploadedFileName,
+        imageLength: uploadedImage.length
+      })
 
+      const requestData = {
+        image_base64: uploadedImage,
+        image_name: uploadedFileName || "uploaded_image.jpg",
+        model_type: selectedModel,
+      }
+
+      console.log('📋 请求数据准备:', {
+        requestData: {
+          ...requestData,
+          image_base64_length: requestData.image_base64.length,
+          hasBase64Prefix: requestData.image_base64.includes(',')
+        }
+      })
+
+      console.log('📋 完整请求体:', JSON.stringify(requestData, null, 2))
+
+      console.log('🚀 发送tRPC请求到:', '/api/trpc/edge/generate.generatePrompt')
+      
       const response = await fetch(`/api/trpc/edge/generate.generatePrompt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          json: {
-            image_url: imageUrl,
-            model_type: selectedModel,
-          },
-        }),
+        body: JSON.stringify({ json: requestData }),
+      })
+      
+      console.log('📡 tRPC请求已发送，等待响应...')
+
+      console.log('📥 HTTP响应状态:', {
+        status: response.status,
+        statusText: response.statusText,
+        ok: response.ok
       })
 
       if (!response.ok) {
-        throw new Error('API请求失败')
+        const errorText = await response.text()
+        console.error('❌ HTTP响应错误:', errorText)
+        throw new Error(`API请求失败: ${response.status} ${response.statusText}`)
       }
 
-      const result: GenerateResponse = await response.json()
+      const responseText = await response.text()
+      console.log('📄 响应文本长度:', responseText.length)
       
-      if (result.success) {
-        setGeneratedPrompt(result.data.prompt)
-        setGeneratedData(result.data)
+      let result
+      try {
+        result = JSON.parse(responseText)
+        console.log('✅ 响应解析成功:', {
+          hasResult: 'result' in result,
+          hasData: 'data' in result.result,
+          hasJson: 'json' in result.result.data,
+          hasSuccess: 'success' in result.result.data.json,
+          success: result.result.data.json.success,
+          hasDataNested: 'data' in result.result.data.json,
+          dataKeys: result.result.data.json.data ? Object.keys(result.result.data.json.data) : []
+        })
+      } catch (parseError) {
+        console.error('❌ 响应解析失败:', parseError)
+        console.error('📄 响应内容前200字符:', responseText.substring(0, 200))
+        throw new Error('响应解析失败')
+      }
+      
+      if (result.result.data.json.success && result.result.data.json.data) {
+        console.log('🎉 生成成功:', {
+          promptLength: result.result.data.json.data.prompt?.length || 0,
+          model: result.result.data.json.data.model,
+          apiSource: result.result.data.json.data.metadata?.api_source
+        })
+        setGeneratedPrompt(result.result.data.json.data.prompt)
+        setGeneratedData(result.result.data.json.data)
       } else {
-        throw new Error('生成失败')
+        console.error('❌ API返回失败:', result)
+        throw new Error(result.result.data.json.error?.message || '生成失败')
       }
     } catch (error) {
-      console.error("生成失败:", error)
-      alert("生成失败，请重试")
+      console.error("❌ 生成失败:", {
+        error: error instanceof Error ? error.message : error,
+        stack: error instanceof Error ? error.stack : undefined,
+        type: typeof error
+      })
+      alert(`生成失败: ${error instanceof Error ? error.message : '未知错误'}`)
     } finally {
       setIsLoading(false)
     }

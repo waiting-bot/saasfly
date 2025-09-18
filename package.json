@@ -36,6 +36,7 @@
   ],
   "packageManager": "bun@v1.1.10",
   "dependencies": {
+    "dotenv": "^17.2.2",
     "next-auth": "^4.24.7"
   }
 }
