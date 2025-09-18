@@ -1,7 +1,54 @@
 import * as React from "react";
 
 import { cn } from "@saasfly/ui";
-import * as Icons from "@saasfly/ui/icons";
+import {
+  Add,
+  ArrowRight,
+  Blocks,
+  Billing,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Cloud,
+  Cluster,
+  Close,
+  Copy,
+  CopyDone,
+  Dashboard,
+  Ellipsis,
+  Help,
+  Heart,
+  Key,
+  Languages,
+  Laptop,
+  Logo,
+  Menu,
+  Moon,
+  Organization,
+  Page,
+  Post,
+  Rocket,
+  Search,
+  Settings,
+  ShieldCheck,
+  Spinner,
+  Sun,
+  ThumbsUp,
+  Trash,
+  Twitter,
+  User,
+  Warning,
+  System,
+  Mdx,
+  ClerkWide,
+  TRPC,
+  GitHub,
+  Nextjs,
+  Prisma,
+  Kysely,
+  Tailwind,
+  Google,
+} from "@saasfly/ui";
 
 type EmptyPlaceholderProps = React.HTMLAttributes<HTMLDivElement>;
 
@@ -27,14 +74,63 @@ export function EmptyPlaceholder({
 
 interface EmptyPlaceholderIconProps
   extends Partial<React.SVGProps<SVGSVGElement>> {
-  name: keyof typeof Icons;
+  name: keyof typeof icons;
 }
+
+const icons = {
+  Add,
+  ArrowRight,
+  Blocks,
+  Billing,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Cloud,
+  Cluster,
+  Close,
+  Copy,
+  CopyDone,
+  Dashboard,
+  Ellipsis,
+  Help,
+  Heart,
+  Key,
+  Languages,
+  Laptop,
+  Logo,
+  Menu,
+  Moon,
+  Organization,
+  Page,
+  Post,
+  Rocket,
+  Search,
+  Settings,
+  ShieldCheck,
+  Spinner,
+  Sun,
+  ThumbsUp,
+  Trash,
+  Twitter,
+  User,
+  Warning,
+  System,
+  Mdx,
+  ClerkWide,
+  TRPC,
+  GitHub,
+  Nextjs,
+  Prisma,
+  Kysely,
+  Tailwind,
+  Google,
+};
 
 EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
   name,
-  className, // ...props
+  className,
 }: EmptyPlaceholderIconProps) {
-  const Icon = Icons[name];
+  const Icon = icons[name];
 
   if (!Icon) {
     return null;

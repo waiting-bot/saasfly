@@ -11,15 +11,15 @@ import {
   Users,
 } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@saasfly/ui/avatar";
-import { Button } from "@saasfly/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@saasfly/ui";
+import { Button } from "@saasfly/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@saasfly/ui/card";
+} from "@saasfly/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,9 +27,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@saasfly/ui/dropdown-menu";
-import { Input } from "@saasfly/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@saasfly/ui/sheet";
+} from "@saasfly/ui";
+import { Input } from "@saasfly/ui";
+import { Sheet, SheetContent, SheetTrigger } from "@saasfly/ui";
 import {
   Table,
   TableBody,
@@ -37,7 +37,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@saasfly/ui/table";
+} from "@saasfly/ui";
 
 export default function Dashboard() {
   return (

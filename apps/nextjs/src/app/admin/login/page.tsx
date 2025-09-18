@@ -6,9 +6,9 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 
 import { cn } from "@saasfly/ui";
-import { CardBody, CardContainer, CardItem } from "@saasfly/ui/3d-card";
-import { buttonVariants } from "@saasfly/ui/button";
-import * as Icons from "@saasfly/ui/icons";
+import { CardBody, CardContainer, CardItem } from "@saasfly/ui";
+import { buttonVariants } from "@saasfly/ui";
+import * as Icons from "@saasfly/ui";
 
 export default function LoginPage() {
   // const [isLoading, setIsLoading] = React.useState<boolean>(false);

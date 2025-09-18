@@ -8,9 +8,9 @@ import { useRouter } from "next/navigation";
 
 import { cn } from "@saasfly/ui";
 //button self design
-import { buttonVariants, type ButtonProps } from "@saasfly/ui/button";
-import * as Icons from "@saasfly/ui/icons";
-import { toast } from "@saasfly/ui/use-toast";
+import { buttonVariants, type ButtonProps } from "@saasfly/ui";
+import * as Icons from "@saasfly/ui";
+import { toast } from "@saasfly/ui";
 
 import { trpc } from "~/trpc/client";
 

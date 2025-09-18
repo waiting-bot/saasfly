@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@saasfly/ui/accordion";
+} from "@saasfly/ui";
 
 export function Questions() {
   return (

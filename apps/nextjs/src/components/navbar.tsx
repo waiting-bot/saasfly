@@ -6,7 +6,7 @@ import type { User } from "@saasfly/auth";
 import { useSelectedLayoutSegment } from "next/navigation";
 
 import { cn } from "@saasfly/ui";
-import { Button } from "@saasfly/ui/button";
+import { Button } from "@saasfly/ui";
 
 import { MainNav } from "./main-nav";
 import { LocaleChange } from "~/components/locale-change";

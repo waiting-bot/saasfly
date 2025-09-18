@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { Button } from "@saasfly/ui/button"
+import { Button } from "@saasfly/ui"
 
 export default function HomePage() {
   return (

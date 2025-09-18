@@ -1,10 +1,10 @@
-import { FollowerPointerCard } from "@saasfly/ui/following-pointer";
+import { FollowerPointerCard } from "@saasfly/ui";
 
 export function XBlogArticle() {
   return (
     <div className="w-80">
       <FollowerPointerCard
-        title={
+        cardTitle={
           <TitleComponent
             title={blogContent.author}
             avatar={blogContent.authorAvatar}

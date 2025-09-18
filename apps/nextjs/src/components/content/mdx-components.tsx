@@ -5,7 +5,7 @@ import NextImage, { ImageProps } from "next/image";
 import { useMDXComponent } from "next-contentlayer2/hooks";
 
 import { cn } from "@saasfly/ui";
-import { Callout } from "@saasfly/ui/callout";
+import { Callout } from "@saasfly/ui";
 
 import { MdxCard } from "~/components/content/mdx-card";
 

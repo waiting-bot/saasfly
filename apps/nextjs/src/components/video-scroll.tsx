@@ -3,8 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { ContainerScroll } from "@saasfly/ui/container-scroll-animation";
-import { ColourfulText } from "@saasfly/ui/colorful-text";
+import { ContainerScroll } from "@saasfly/ui";
+import { ColourfulText } from "@saasfly/ui";
 
 export function VideoScroll({ dict } : { dict: Record<string, string> | undefined }) {
   return (

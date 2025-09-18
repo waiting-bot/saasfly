@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@saasfly/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@saasfly/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@saasfly/ui/select"
+import { Button } from "@saasfly/ui"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@saasfly/ui"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@saasfly/ui"
 import { Upload, Image as ImageIcon, Loader2, Copy, RefreshCw } from "lucide-react"
 
 const MODELS = [

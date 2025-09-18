@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { cn } from "@saasfly/ui";
-import { buttonVariants } from "@saasfly/ui/button";
+import { buttonVariants } from "@saasfly/ui";
 import {
   Card,
   CardContent,
@@ -11,9 +11,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@saasfly/ui/card";
-import * as Icons from "@saasfly/ui/icons";
-import { toast } from "@saasfly/ui/use-toast";
+} from "@saasfly/ui";
+import * as Icons from "@saasfly/ui";
+import { toast } from "@saasfly/ui";
 
 import { formatDate } from "~/lib/utils";
 import { UserSubscriptionPlan } from "~/types";

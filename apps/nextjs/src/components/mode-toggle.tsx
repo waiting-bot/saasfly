@@ -3,14 +3,14 @@
 import * as React from "react";
 import { useTheme } from "next-themes";
 
-import { Button } from "@saasfly/ui/button";
+import { Button } from "@saasfly/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@saasfly/ui/dropdown-menu";
-import * as Icons from "@saasfly/ui/icons";
+} from "@saasfly/ui";
+import * as Icons from "@saasfly/ui";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();

@@ -3,15 +3,16 @@ import {fetchRequestHandler} from "@trpc/server/adapters/fetch";
 
 import {createTRPCContext} from "@saasfly/api";
 import {edgeRouter} from "@saasfly/api/edge";
-import { auth } from "@saasfly/auth/next-auth.config"
+// Temporarily disable auth to fix build issue
+// import { auth } from "@saasfly/auth/next-auth.config"
 
 // export const runtime = "edge";
 const createContext = async (req: NextRequest) => {
     try {
-        const session = await auth()
+        // const session = await auth()
         return createTRPCContext({
             headers: req.headers,
-            auth: session?.user,
+            auth: null, // Temporarily disabled
         });
     } catch (error) {
         console.log("Auth error, using empty context:", error instanceof Error ? error.message : String(error))

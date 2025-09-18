@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { InfiniteMovingCards } from "@saasfly/ui/infinite-moving-cards";
+import { InfiniteMovingCards } from "@saasfly/ui";
 
 export function InfiniteMovingCardss() {
   return (

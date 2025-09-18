@@ -8,11 +8,11 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { cn } from "@saasfly/ui";
-import { buttonVariants } from "@saasfly/ui/button";
-import * as Icons from "@saasfly/ui/icons";
-import { Input } from "@saasfly/ui/input";
-import { Label } from "@saasfly/ui/label";
-import { toast } from "@saasfly/ui/use-toast";
+import { buttonVariants } from "@saasfly/ui";
+import * as Icons from "@saasfly/ui";
+import { Input } from "@saasfly/ui";
+import { Label } from "@saasfly/ui";
+import { toast } from "@saasfly/ui";
 
 type Dictionary = Record<string, string>;
 

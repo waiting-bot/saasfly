@@ -1,9 +1,9 @@
-import TextReveal from "@saasfly/ui/text-reveal";
+import { TextRevealByWord } from "@saasfly/ui";
 
 export function WordReveal() {
   return (
     <div className="z-10 flex min-h-[16rem] items-center justify-center rounded-lg dark:bg-black">
-      <TextReveal text="Saasfly will change the way you build SaaS apps." />
+      <TextRevealByWord text="Saasfly will change the way you build SaaS apps." />
     </div>
   );
 }

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 
 import { cn } from "@saasfly/ui";
-import { AnimatedGradientText } from "@saasfly/ui/animated-gradient-text";
+import { AnimatedGradientText } from "@saasfly/ui";
 
 export function DocumentGuide({ children }: { children: ReactNode }) {
   return (

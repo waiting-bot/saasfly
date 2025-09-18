@@ -13,9 +13,9 @@ import {
 import Link from "next/link";
 import Balancer from "react-wrap-balancer";
 
-import { Button, buttonVariants } from "@saasfly/ui/button";
-import * as Icons from "@saasfly/ui/icons";
-import { Switch } from "@saasfly/ui/switch";
+import { Button, buttonVariants } from "@saasfly/ui";
+import * as Icons from "@saasfly/ui";
+import { Switch } from "@saasfly/ui";
 
 import { BillingFormButton } from "~/components/price/billing-form-button";
 import { priceDataMap } from "~/config/price/price-data";

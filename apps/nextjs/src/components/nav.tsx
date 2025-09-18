@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@saasfly/ui";
-import * as Icons from "@saasfly/ui/icons";
+import * as Icons from "@saasfly/ui";
 
 import type { SidebarNavItem } from "~/types";
 

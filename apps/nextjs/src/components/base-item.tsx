@@ -1,4 +1,4 @@
-import { Skeleton } from "@saasfly/ui/skeleton";
+import { Skeleton } from "@saasfly/ui";
 
 export function BasicItemSkeleton() {
   return (
