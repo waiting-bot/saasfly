@@ -24,7 +24,7 @@ export default function LoginPage() {
     const checkSession = async () => {
       const session = await getSession()
       if (session) {
-        router.push(from as string)
+        router.push(from)
       }
     }
     checkSession()
@@ -37,7 +37,7 @@ export default function LoginPage() {
 
     try {
       const result = await signIn("github", { 
-        callbackUrl: from as string,
+        callbackUrl: from,
         redirect: false 
       })
       
@@ -45,7 +45,7 @@ export default function LoginPage() {
         setError("登录失败，请重试")
       } else {
         // GitHub OAuth会自动重定向
-        router.push(from as string)
+        router.push(from)
       }
     } catch (error) {
       setError("登录失败，请重试")
@@ -70,7 +70,7 @@ export default function LoginPage() {
                 type="submit"
                 className="w-full"
                 disabled={isLoading}
-                onClick={() => signIn("github", { callbackUrl: from as string })}
+                onClick={() => signIn("github", { callbackUrl: from })}
               >
                 {isLoading ? (
                   <Loader className="mr-2 h-4 w-4 animate-spin" />

@@ -1,13 +1,30 @@
 import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
-import { KyselyAdapter } from "@auth/kysely-adapter"
+import Google from "next-auth/providers/google"
+import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { db } from "@saasfly/db"
 
 import { env } from "./env.mjs"
 
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string
+      name?: string | null
+      email?: string | null
+      image?: string | null
+      isAdmin?: boolean
+    }
+  }
+}
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: KyselyAdapter(db),
+  // adapter: PrismaAdapter(db), // Temporarily disabled to fix build
   providers: [
+    Google({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    }),
     GitHub({
       clientId: env.GITHUB_CLIENT_ID,
       clientSecret: env.GITHUB_CLIENT_SECRET,

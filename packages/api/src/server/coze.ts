@@ -1,4 +1,4 @@
-import { env } from "../env";
+import { env } from "../env.mjs";
 
 
 
@@ -96,7 +96,7 @@ class CozeAPIClient {
       return await response.json()
     } catch (error) {
       clearTimeout(timeoutId)
-      if (error.name === 'AbortError') {
+      if (error instanceof Error && error.name === 'AbortError') {
         throw new Error('请求超时')
       }
       throw error
@@ -328,7 +328,7 @@ class MockCozeClient extends CozeAPIClient {
     return 'mock_file_id_' + Date.now()
   }
 
-  async generatePrompt(fileId: string, modelType: string): Promise<string> {
+  async generatePrompt(imageFile: File, modelType: string): Promise<string> {
     // 模拟网络延迟
     await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1500))
 
@@ -355,10 +355,10 @@ class MockCozeClient extends CozeAPIClient {
       ],
     }
 
-    const prompts = mockPrompts[modelType] || mockPrompts.normal
+    const prompts = mockPrompts[modelType as keyof typeof mockPrompts] || mockPrompts.normal
     const randomPrompt = prompts[Math.floor(Math.random() * prompts.length)]
 
-    return randomPrompt
+    return randomPrompt || "A beautiful landscape photograph"
   }
 
   async healthCheck(): Promise<boolean> {

@@ -13,7 +13,8 @@ import { useSigninModal } from "~/hooks/use-signin-modal";
 
 export const SignInModal = ({ dict }: { dict: Record<string, string> }) => {
   const signInModal = useSigninModal();
-  const [signInClicked, setSignInClicked] = useState(false);
+  const [signInClicked, setSignInClicked] = useState("");
+  const [isSignInLoading, setIsSignInLoading] = useState(false);
 
   return (
     <Modal showModal={signInModal.isOpen} setShowModal={signInModal.onClose}>
@@ -35,9 +36,36 @@ export const SignInModal = ({ dict }: { dict: Record<string, string> }) => {
         <div className="flex flex-col space-y-4 px-4 py-8 md:px-16">
           <Button
             variant="default"
-            disabled={signInClicked}
+            disabled={isSignInLoading}
             onClick={() => {
-              setSignInClicked(true);
+              setIsSignInLoading(true);
+              setSignInClicked("google");
+              signIn("google", { redirect: false })
+                .then(() =>
+                  setTimeout(() => {
+                    signInModal.onClose();
+                  }, 1000),
+                )
+                .catch((error) => {
+                  console.error("Google sign in failed:", error);
+                  setIsSignInLoading(false);
+                });
+            }}
+          >
+            {isSignInLoading && signInClicked === "google" ? (
+              <Icons.Spinner className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Icons.Google className="mr-2 h-4 w-4" />
+            )}{" "}
+            {dict.signup_google || "Sign in with Google"}
+          </Button>
+
+          <Button
+            variant="outline"
+            disabled={isSignInLoading}
+            onClick={() => {
+              setIsSignInLoading(true);
+              setSignInClicked("github");
               signIn("github", { redirect: false })
                 .then(() =>
                   setTimeout(() => {
@@ -45,11 +73,12 @@ export const SignInModal = ({ dict }: { dict: Record<string, string> }) => {
                   }, 1000),
                 )
                 .catch((error) => {
-                  console.error("signUp failed:", error);
+                  console.error("GitHub sign in failed:", error);
+                  setIsSignInLoading(false);
                 });
             }}
           >
-            {signInClicked ? (
+            {isSignInLoading && signInClicked === "github" ? (
               <Icons.Spinner className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               <Icons.GitHub className="mr-2 h-4 w-4" />

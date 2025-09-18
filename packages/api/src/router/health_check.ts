@@ -9,7 +9,7 @@ export const healthCheckRouter = createTRPCRouter({
       
       // 测试数据库连接
       try {
-        await db.selectFrom("customer").select("id").limit(1).execute();
+        await db.selectFrom("customer" as any).select("id").limit(1).execute();
         dbStatus = "connected";
       } catch (error) {
         dbStatus = "error";
