@@ -37,11 +37,15 @@ const config = {
   },
   images: {
     domains: ["images.unsplash.com", "avatars.githubusercontent.com", "www.twillot.com", "cdnv2.ruguoapp.com", "www.setupyourpay.com"],
+    unoptimized: false, // Keep optimization for better performance
   },
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: false },
   typescript: { ignoreBuildErrors: false },
   output: "standalone", // Enabled for Netlify deployment compatibility
+  trailingSlash: true, // Important for static deployment and routing
+  // Skip middleware for static generation
+  skipTrailingSlashRedirect: true,
 };
 
 export default withMDX()(config);
