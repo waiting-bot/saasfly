@@ -41,7 +41,7 @@ const config = {
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: false },
   typescript: { ignoreBuildErrors: false },
-  // output: "standalone", // Disabled for Vercel deployment compatibility
+  output: "standalone", // Enabled for Netlify deployment compatibility
 };
 
 export default withMDX()(config);
